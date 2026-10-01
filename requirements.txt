@@ -1,4 +1,6 @@
-discord.py>=2.3,<3
+discord.py[voice]>=2.7
 discord.py
 PyNaCl
 yt-dlp
+aiohttp
+imageio-ffmpeg

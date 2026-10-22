@@ -927,7 +927,15 @@ async def play_next(interaction: discord.Interaction):
     global current_playing, loop_statuses, autoplay_statuses
     guild_id = interaction.guild.id
     queue = get_queue(guild_id)
-    
+
+    vc = interaction.guild.voice_client
+    if vc is None or not vc.is_connected():
+        queue.clear()
+        current_playing.pop(guild_id, None)
+        return   # บอทไม่ได้อยู่ในห้องเสียงแล้ว หยุดเงียบๆ ไม่ต้องเล่นต่อ
+    if vc.is_playing() or vc.is_paused():
+        return   # มีเพลงเล่นอยู่แล้ว กันเรียกซ้ำ
+
     # 1. เช็คโหมด Loop
     if loop_statuses.get(guild_id, False) and guild_id in current_playing:
         url, title, requester = current_playing[guild_id]
@@ -1186,7 +1194,6 @@ async def slash_skip(interaction: discord.Interaction):
         manual_stop.add(interaction.guild.id)
         interaction.guild.voice_client.stop()
         await interaction.response.send_message("⏭️ ข้ามเพลงเรียบร้อยแล้วงับ!")
-        bot.loop.create_task(play_next(interaction))
     else:
         await interaction.response.send_message("❌ ตอนนี้ไม่มีเพลงกำลังเล่นอยู่เลยนะ", ephemeral=True)
 

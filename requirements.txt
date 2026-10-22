@@ -4,4 +4,3 @@ PyNaCl
 yt-dlp
 aiohttp
 imageio-ffmpeg
-cookies.txt

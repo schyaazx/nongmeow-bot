@@ -63,13 +63,25 @@ FFMPEG_OPTS = {
     "options": "-vn",
 }
 YTDL_FLAT = yt_dlp.YoutubeDL(
-    {"quiet": True, "noplaylist": False, "extract_flat": "in_playlist",
-     "default_search": "ytsearch", "format": "bestaudio/best"}
-)
-YTDL_FULL = yt_dlp.YoutubeDL(
-    {"quiet": True, "noplaylist": True, "format": "bestaudio/best", "default_search": "ytsearch"}
+    {
+        "quiet": True,
+        "noplaylist": False,
+        "extract_flat": "in_playlist",
+        "default_search": "ytsearch",
+        "format": "bestaudio/best",
+        "cookiefile": "cookies.txt",
+    }
 )
 
+YTDL_FULL = yt_dlp.YoutubeDL(
+    {
+        "quiet": True,
+        "noplaylist": True,
+        "format": "bestaudio/best",
+        "default_search": "ytsearch",
+        "cookiefile": "cookies.txt",
+    }
+)
 
 # ---------- ตัวช่วยหน้าตา ----------
 def fmt_time(sec: Optional[float]) -> str:
